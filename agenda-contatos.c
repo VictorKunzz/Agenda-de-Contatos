@@ -15,6 +15,7 @@ void pesquisarContato(void);
 void excluirContato(void);
 void salvarAgenda(void);
 void carregarAgenda(void);
+void listarContatos(void);
 
 int main(void) {
     char menu; 
@@ -26,8 +27,9 @@ int main(void) {
     	printf("--------------------\n");
         printf("1. Adicionar Contato\n"); 
         printf("2. Consultar Contato\n"); 
-        printf("3. Excluir Contato\n");  
-        printf("4. Sair\n");
+        printf("3. Excluir Contato\n");
+		printf("4. Listar Contatos\n");  
+        printf("5. Sair\n");
 		printf("--------------------\n"); 
         printf("Escolha uma opcao: ");
         scanf("%c", &menu);
@@ -47,13 +49,16 @@ int main(void) {
                 excluirContato(); 
                 break;
             case '4':
+                listarContatos(); 
+                break;    
+            case '5':
                 salvarAgenda();
                 printf("Saindo\n");
                 break;
             default:
                 printf("Opcao invalida\n"); 
         }
-    } while (menu != '4');
+    } while (menu != '5');
 
     return 0;
 }
@@ -124,4 +129,19 @@ void carregarAgenda(void) {
     }
     numContatos = fread(agenda, sizeof(Contato), 100, arquivo);  
     fclose(arquivo); 
+}
+
+void listarContatos(void) {
+    if (numContatos == 0) {
+        printf("A agenda está vazia.\n");
+        return;
+    }
+    printf("\nLista de Contatos:\n");
+    for (int i = 0; i < numContatos; i++) {
+    	printf("\n---------------\n");
+        printf("Contato %d\n", i + 1);
+        printf("Nome: %s\n", agenda[i].nome);
+        printf("Telefone: %s\n", agenda[i].telefone);
+        printf("---------------\n\n");
+    }
 }
